@@ -2,6 +2,9 @@ const { timeStamp } = require("console");
 const express = require("express");
 const http =require('http');
 const socketIO =require("socket.io");
+//const fs = require('fs');
+
+
 
 //localhost port
 const port  = 5000 ;
@@ -51,10 +54,14 @@ app.get('/', (req, res) => {
     console.log("server is on !!!!!")
     res.json({individuals,bussiness,specialNeeds});
 })
-
+const updateDataBase =()=>{
+    fs.writeFileSync("data.json",JSON.stringify({individuals,bussiness,specialNeeds}))
+}
 
 io.on("connection" , (socket) =>{
     console.log('a user connected');
+    
+
     io.emit('indDisp',individuals);
     io.emit('busDisp',bussiness);
     io.emit('spDisp',specialNeeds);
@@ -72,7 +79,7 @@ io.on("connection" , (socket) =>{
         if(individuals.passed != 0){
             individuals.passed= individuals.current -1 ;
        }
-        console.log(individuals);
+        //console.log(individuals);
         io.emit('indDisp',individuals);
     });
 
@@ -83,7 +90,7 @@ io.on("connection" , (socket) =>{
         if(bussiness.passed != 0){
             bussiness.passed= bussiness.current -1 ;
        }
-        console.log(bussiness);
+        //console.log(bussiness);
         io.emit('busDisp',bussiness);
     });
 
@@ -94,7 +101,7 @@ io.on("connection" , (socket) =>{
         if(specialNeeds.passed != 0){
             specialNeeds.passed= specialNeeds.current -1 ;
        }
-        console.log(specialNeeds);
+        //console.log(specialNeeds);
         io.emit('spDisp',specialNeeds);
     });
 
