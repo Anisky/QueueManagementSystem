@@ -1,0 +1,29 @@
+const express = require("express");
+
+const app = express();
+const http =require('http');
+const server = http.createServer(app);
+const {Server}=require("socket.io");
+const io = new Server(server);
+
+
+const individuals = [
+    
+        { id: 1, firstName: 'John', lastName: 'Doe' },
+        { id: 2, firstName: 'steve', lastName: 'smith' },
+        { id: 3, firstName: 'mark', lastName: 'Carl' }
+    ];
+const bussiness =[];
+const specialNeeds = [];
+
+app.get('/display', (req, res) => {
+    
+    res.json({individuals,bussiness,specialNeeds});
+})
+io.on('connection' , (socket)=>{
+    console.log('a user connected');
+})
+
+const port = 5000;
+
+server.listen(port, () => console.log(`Server started on port ${port}`));

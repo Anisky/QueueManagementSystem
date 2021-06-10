@@ -1,12 +1,52 @@
-ul{
-    list-style: none;
-    padding: 0;
-    width: 50%;
-    margin: auto;
+
+.individuals{
+      background:rgb(125, 165, 102);
+      text-align: center;
+      border-radius: 5%;
+    }
+.bussiness{
+      background:rgb(103, 96, 199);
+      border-radius: 5%;
+    }
+.special_needs{
+        background:LightPink;
+        border-radius: 5%;
+    }
+.ticketNumber1{
+      border: 2px solid rgb(125, 165, 102);
+      border-radius: 5%;
+    }
+.ticketNumber2{
+    border: 2px solid rgb(103, 96, 199);
+    border-radius: 5%;
+      }
+.ticketNumber3{
+    border: 2px solid LightPink;
+    border-radius: 5%;
+      }
+.customer-container.p{
+    font-size: 1.3rem;
+    line-height: 3rem;
 }
 
-li {
-    font-size: 1.3rem;
-    line-height: 2rem;
-    border-bottom: 1px dotted #777;
-}
+  
+h1{
+     margin : 50px 0 50px 0;
+     ;
+ }
+ button  {
+     height: 100%;
+     width: 100%;
+     font-size: 25px;
+     border-radius: 15%;
+ }
+  .customer-container {
+    width: 60%;
+    padding-top: 0;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 3fr 3fr 2fr;
+    grid-template-rows: 70px 100px 100px 100px;
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+  }

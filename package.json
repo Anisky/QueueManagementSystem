@@ -4,11 +4,11 @@
     "description": "queue management system server",
     "main": "server.js",
     "scripts": {
-        "client-install" : "cd client && npm install",
+        "client-install": "cd client && npm install",
         "start": "node server.js",
         "server": "nodemon server.js",
         "client": "npm start --prefix client",
-        "dev"   : "concurrently \"npm run server\" \"npm run client\""
+        "dev": "concurrently \"npm run server\" \"npm run client\""
     },
     "author": "Anisky",
     "license": "MIT",
@@ -16,7 +16,10 @@
         "client": "0.0.1",
         "concurrently": "^6.2.0",
         "create-react-app": "^4.0.3",
-        "express": "^4.17.1"
+        "express": "^4.17.1",
+        "react-router-dom": "^5.2.0",
+        "socket.io": "^4.1.2",
+        "socket.io-client": "^4.1.2"
     },
     "devDependencies": {
         "nodemon": "^2.0.7"
