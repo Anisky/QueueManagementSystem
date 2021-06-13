@@ -6,9 +6,9 @@ from threading import Thread
 LSBFIRST = 1
 MSBFIRST = 2
 
-dataPin   = 12		#DS Pin of 74HC595(Pin14)
-latchPin  = 14		#ST_CP Pin of 74HC595(Pin12)
-clockPin = 16		#CH_CP Pin of 74HC595(Pin11)
+dataPin   = 8		#DS Pin of 74HC595(Pin14)
+latchPin  = 10		#ST_CP Pin of 74HC595(Pin12)
+clockPin  = 12		#CH_CP Pin of 74HC595(Pin11)
 
 #distributer pins 
 indTicketPin = 22
