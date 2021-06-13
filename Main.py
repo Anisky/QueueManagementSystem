@@ -23,14 +23,18 @@ dhtPin      = 16
 
 sensor = Adafruit_DHT.DHT11
 
-global tem ,hum
+global tem ,hum , deksNbr , bl
 tem = 0
 hum = 0
-global bl
+deskNum =0
+
 bl = 0b1
 
 # seven segment code 
 num = [0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,0xff,0x6f,0x77,0x7f,0x39,0x3e,0x79,0x71]
+clientCategory = [[0x77,0x73], # PA for particulars
+                  [0xe3,0xf7], # BU for bussiness
+                  [0x73,0xd6,]]# SP for Special needs
 
 # setup pin configuratoin
 def setup():
@@ -118,7 +122,21 @@ def showTem():
                num[int(hum%10)]|( 1 << 7),
                0x00,
                0x00)
-            
+
+def showQueue(QueueNbr ,catNbr):
+    displayLED(num[int((QueueNbr%1000)/1000)],
+               num[int((QueueNbr%1000)/100)],
+               num[int((QueueNbr%100)/10)],
+               num[int(QueueNbr%10)],
+               clientCategory[catNbr][1],
+               clientCategory[catNbr][0],  
+               0x00,
+               0x00,
+               0x00,
+               0x00,
+               0x00,
+               0x00)  
+           
     
 class DhtThread:
       
@@ -181,18 +199,24 @@ individuals  = Customer()
 bussiness    = Customer()
 specialNeeds = Customer()
 
+
 def getIndTicket():
+
     individuals.setInQueue(individuals.getInQueue + 1)
     individuals.total.insert(0 , {"timestamp" : time.time(),
                                   "count"     :individuals.getCount
                                 }
                             )
+    
+
 def getBusTicket():
     bussiness.setInQueue(bussiness.getInQueue + 1)
     bussiness.total.insert(0 , {"timestamp" : time.time(),
                                 "count"     :bussiness.getCount
                                 }
                             )
+   
+
 def getSpTicket():
     specialNeeds.setInQueue(specialNeeds.getInQueue + 1)
     specialNeeds.total.insert(0 , {"timestamp" : time.time(),
@@ -200,23 +224,32 @@ def getSpTicket():
                                 }
                             )
 def callNextCustomer():
+    nextNumberCall= 0
+    clientCategory= 5
     if(specialNeeds.getInQueue > 0):
         specialNeeds.setCurrent(specialNeeds.getCurrent + 1 )
+        nextNumberCall = specialNeeds.getCurrent()
+        clientCategory = 2
         if (specialNeeds.getInQueue > 0 ):
             specialNeeds.setInQueue(specialNeeds.getInQueue - 1 )
-
+        
     elif (bussiness.getInQueue > 0 ):
         bussiness.setCurrent(bussiness.getCurrent + 1 )
+        nextNumberCall = bussiness.getCurrent()
+        clientCategory = 1
         if (bussiness.getInQueue > 0 ):
             bussiness.setInQueue(bussiness.getInQueue - 1 )
     else :
         individuals.setCurrent(individuals.getCurrent + 1 )
+        nextNumberCall = individuals.getCurrent()
+        clientCategory = 0
         if (individuals.getInQueue > 0 ):
             individuals.setInQueue(individuals.getInQueue - 1 )
+    showQueue(nextNumberCall,clientCategory)
 
 # program loop 
 def loop():
-    global bl
+    global bl , deskNum
     counter =1
     while True:
 
